@@ -1,0 +1,73 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+struct node *head = NULL;
+struct node *temp = NULL;
+struct node *getnode();
+void insert_beg();
+void display();
+void main() {
+    int a;
+    while(1){
+        printf("Enter your choice:");
+        scanf("%d",&a);
+        switch(a){
+            case 1:printf("insertion at beggining:");
+            insert_beg();
+            break;
+            
+            
+            case 2:display();
+            break;
+            
+            case 3:exit(0);
+            
+            }   
+            
+        }
+}
+        struct node *getnode(){
+             struct node*new = (struct node*)malloc(sizeof(struct node));
+            printf("Enter data:");
+            scanf("%d",&new->data);
+            new->next = NULL;
+            return new;
+        }
+        
+        void insert_beg(){
+            struct node *new = getnode();
+            if(head==NULL){
+                head = new;
+                head->next = head;
+                temp = new;
+            } else {
+                new->next = head;
+                temp->next = new;
+                head = new;
+            }
+        }
+        
+        void display(){
+            struct node*temp1=head;
+            while(temp1!=NULL){
+                printf("%d",temp1->data);
+                temp1=temp1->next;
+            }
+        
+        }
+
+
+
+
+

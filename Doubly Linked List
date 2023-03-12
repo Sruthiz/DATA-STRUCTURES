@@ -1,0 +1,173 @@
+
+//Deletion of Doubly linked list
+#include <stdio.h>
+#include<stdlib.h>
+typedef struct node{
+    int data;
+    struct node *next;
+    struct node *prev;
+}node;
+node*head=NULL;
+node*tail;
+node*temp;
+node *getnode();
+void display();
+void insert_beg();
+void insert_end();
+void insert_pos(int);
+void delete_beg();
+void delete_end();
+int length();
+void main(){
+    int a,k;
+    while(1){
+        printf("1.insert_beg,2.display,3.insert_end,4.insert_pos,5.delete_beg,6.dlete_end,7.quit\n");
+        printf("Enter choice:\n");
+        scanf("%d",&a);
+        switch(a){
+            case 1:insert_beg();
+            display();
+            break;
+            case 2:display();
+            break;
+            case 3:insert_end();
+            display();
+            break;
+            case 4:insert_pos(k);
+            display();
+            break;
+            case 5:delete_beg();
+            
+            break;
+            case 6:delete_end();
+        
+            break;
+            
+            
+            case 7:exit(0);
+            
+        }
+    }
+}
+node *getnode(){
+    node*new=(node*)malloc(sizeof(node));
+    printf("\n print data:");
+    scanf("%d",&new->data);
+    new->next=NULL;
+    return new;
+}
+
+void insert_beg(){
+    
+    node*new = getnode();
+    if(head==NULL)
+        head=new;
+    else{
+    new->next=head;
+    head->prev=new;
+    head=new;
+}
+}
+void insert_end(){
+    node*tail=head;
+    node*new=getnode();
+    if(head==NULL) {
+    head=new;
+    tail=new;
+    }else{
+        while(tail->next!=NULL)
+        tail = tail->next;
+        tail->next=new;
+        new->prev=tail;
+        tail=new;
+        
+    }
+}
+
+void insert_pos(int k){
+    int i,n;
+    node*temp=head;
+    node*new;
+    n=length();
+    node*curr=head;
+    printf("Enter k value:");
+    scanf("%d",&k);
+    if(k==1)
+    insert_beg();
+    else if(k>=n)
+    insert_end();
+    else {
+        while(1<k && k<n){
+            for(i=1;i<k-1;i++){
+                curr=curr->next;
+            }
+            temp=curr->next;
+            temp->prev=new;
+            new->prev = curr;
+            curr->next = new;
+            
+            new->next = temp;
+            }
+        }
+    }
+
+void display(){
+    node*temp1=head;
+    if(head==NULL)
+    printf("NO NODES");
+    while(temp1!=NULL){
+        printf("The elements are:");
+        printf("%d\n",temp1->data);
+        temp1 = temp1->next;
+    }
+}
+int length(){
+    int count=1;
+    node *temp=head;
+    while(temp->next!=NULL){
+    count++;
+    temp=temp->next;
+    }
+    printf("length of list is %d",count);
+    return 0;
+}
+    
+void delete_beg(){
+    node *temp1=head;
+    if(head==NULL){
+        printf("no elements to delete");
+    }
+    else if(head->next==NULL){
+        head =temp= NULL;
+        free(temp);
+    } else {
+        head->next->prev=NULL;
+        head=head->next;
+        printf("element deleted is:");
+        printf("%d",temp1->data);
+        free(temp1);
+        
+    }
+}   
+void delete_end(){
+    node*temp1=head;
+    if(head==NULL){
+    printf("No node");
+    } 
+    else if(head->next==NULL){
+    head=NULL;
+    tail=NULL;
+    printf("no node");
+   } else{
+       while(temp1->next!=NULL)
+       temp1 = temp1->next;
+        temp1->prev->next=NULL;
+        temp1->prev=NULL;
+        free(temp1);
+    }
+}
+
+
+
+
+

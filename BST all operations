@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int queue[MAX_SIZE];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == MAX_SIZE - 1) {
+        printf("Queue is full\n");
+        return;
+    }
+    if (front == -1) {
+        front = 0;
+    }
+    rear++;
+    queue[rear] = value;
+}
+
+int dequeue() {
+    if (front == -1 || front > rear) {
+        printf("Queue is empty\n");
+        return -1;
+    }
+    int value = queue[front];
+    front++;
+    return value;
+}
+
+int is_empty() {
+    if (front == -1 || front > rear) {
+        return 1;
+    }
+    return 0;
+}
+
+void bfs(int adjacency_matrix[][MAX_SIZE], int *visited, int start, int num_vertices) {
+    int i, vertex;
+
+    visited[start] = 1;
+    enqueue(start);
+
+    while (!is_empty()) {
+        vertex = dequeue();
+        printf("%d ", vertex);
+
+        for (i = 0; i < num_vertices; i++) {
+            if (adjacency_matrix[vertex][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+}
+
+int main() {
+    int adjacency_matrix[MAX_SIZE][MAX_SIZE] = {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 0, 1},
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 0, 1},
+        {0, 1, 0, 1, 0}
+    };
+    int visited[MAX_SIZE] = {0};
+    int num_vertices = 5;
+    int start = 0;
+
+    printf("BFS traversal: ");
+    bfs(adjacency_matrix, visited, start, num_vertices);
+
+    return 0;
+}
+

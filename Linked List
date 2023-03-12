@@ -1,0 +1,165 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node{
+    int data;
+    struct node *next;
+}node;
+node *head=NULL;
+node *temp = NULL;
+node *getnode();
+void insert_at_beg();
+void insert_at_end();
+void insert_at_pos();
+void delete_at_beg();
+void delete_at_end();
+void delete_at_pos();
+int display();
+int length();
+void main(){
+    int a;
+    while(1){
+        printf("Enter your choice value:");
+        scanf("%d",&a);
+        switch(a){
+            case 1:insert_at_beg();
+            display();
+                break;
+            case 2:insert_at_end();
+            display();
+                break;
+            case 3:insert_at_pos();
+            display();
+                break;
+            case 4:delete_at_beg();
+                break;
+            case 5:delete_at_end();
+                break;
+            case 6:delete_at_pos();
+                break;
+            case 7:display();
+                break;
+            case 8:exit(-1);
+               break;
+        }
+    }
+}
+node *getnode(){
+    node *new=(node*)malloc(sizeof(node));
+    printf("Enter data:");
+    scanf("%d",&new->data);
+    new->next=NULL;
+    return new;
+}
+int display(){
+    node *temp=head;
+    while(temp!=NULL){
+    printf("%d",temp->data);
+    temp=temp->next;
+}
+}
+int length(){
+    int count=0;
+    node *temp=head;
+    while(temp->next!=NULL){
+    count++;
+    temp=temp->next;
+    }
+    return count;
+}
+void insert_at_beg(){
+    node *new = getnode();
+    node *temp=head;
+    new->next=head;
+    head=temp=new;
+}
+void insert_at_end(){
+    node *new=getnode();
+    node *temp = head;
+    if(head==NULL)
+    head=temp=NULL;
+    else{
+    while(temp->next!=NULL){
+    temp=temp->next;
+    }
+    temp->next=new;
+    new->next=NULL;
+    temp=new;
+    
+}
+}
+void insert_at_pos(){
+    node *temp1;
+    int k;
+    node *curr=head;
+    printf("Enter position:");
+    scanf("%d",&k);
+    int n=length();
+    if(k==1)
+    insert_at_beg();
+    else if(k==n)
+    insert_at_end();
+    else {
+        if(1<k && k<n){
+        node *new = getnode();
+        for(int i=0;i<k-1;i++)
+            curr=curr->next;
+        new->next = curr->next;
+        curr->next=new;
+        }
+    
+    else{
+        printf("invalid choice");
+    }
+    }
+}
+    
+void delete_at_beg(){
+    node *temp1=head;
+    if(head==NULL)
+    printf("underflow");
+    else if(head->next==NULL){
+    head=temp=NULL;
+    free(temp1);
+    }
+    else{
+        head = head->next;
+        free(temp1);
+    }
+}
+void delete_at_end(){
+    node *temp1=head;
+    if(head==NULL)
+    printf("underflow");
+    else if(head->next==NULL){
+        head=temp=NULL;
+        free(temp1);
+    }
+    else{
+        node *t;
+        while(temp1->next->next!=NULL)
+        temp1=temp1->next;
+        t=temp1->next;
+        temp1->next=NULL;
+        free(t);
+        
+    }
+}
+void delete_at_pos(){
+    int k,n,i;
+    n=length();
+    printf("enter position:");
+    scanf("%d",&k);
+    if(k==1)
+    delete_at_beg();
+    else if(k==n)
+    delete_at_end();
+    else{
+        if(1<k && k<n){
+            for(i=0;i<k-1;i++)
+                temp=temp->next;
+                temp->next=temp->next->next;
+                free(temp);
+            
+        }
+    }
+}

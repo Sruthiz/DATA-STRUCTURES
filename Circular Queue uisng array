@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define size 5
+int queue[size];
+int front=-1;
+int rare = -1;
+void enqueue(int);
+void display();
+void dequeue();
+int main(){
+    int ch,x;
+    while(1){
+        printf("\nEnter choice\n1.enqueue\n2.Dequeue\n3.exit\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1:enqueue(x);
+            printf("The elements are:");
+                display();
+                break;
+            case 2:dequeue();
+                break;
+            case 3:exit(-1);
+                break;
+        }
+    }
+}
+void enqueue(int x){
+    if((rare+1)%size == front){
+    printf("Queue is full");
+    }
+    else if(front==-1 && rare==-1){
+    printf("Enter data:");
+    scanf(" %d",&x);
+    front=rare=0;
+    queue[rare] = x;
+    }
+    else{
+    printf("Enter data:");
+    scanf(" %d",&x);
+    rare = (rare+1)%size;
+    queue[rare] = x;
+    }
+}
+
+void display(){
+    int i=front;
+    if(front==-1 && rare==-1)
+    printf("Queue is empty");
+    else
+        while(i!=rare){
+            printf(" %d",queue[i]);//print till rare not rare element
+            i = (i+1)%size;
+        }
+        printf(" %d",queue[rare]);//to print the rare element
+}
+void dequeue(){
+    if(front==-1 && rare==-1)
+    printf("queue is empty");
+    else if(front==rare){
+    printf("deleted elemets is %d",queue[rare]);
+    front=rare=-1;
+    }
+    else{
+        printf("Deleted element is %d",queue[front]);
+        front = (front+1)%size;
+    }
+}
+
+
+
+
+
+
+
+

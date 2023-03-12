@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_QUEUE_SIZE 1000
+
+// Node struct
+typedef struct Node {
+    int val;
+    struct Node* next;
+} Node;
+
+// Queue struct
+typedef struct Queue {
+    Node* front;
+    Node* rear;
+} Queue;
+
+// Create a new Node
+Node* createNode(int val) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->val = val;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Create a new Queue
+Queue* createQueue() {
+    Queue* newQueue = (Queue*)malloc(sizeof(Queue));
+    newQueue->front = newQueue->rear = NULL;
+    return newQueue;
+}
+
+// Check if Queue is empty
+int isQueueEmpty(Queue* queue) {
+    return queue->front == NULL;
+}
+
+// Add a Node to the rear of the Queue
+void enqueue(Queue* queue, int val) {
+    Node* newNode = createNode(val);
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+}
+
+// Remove a Node from the front of the Queue
+int dequeue(Queue* queue) {
+    if (isQueueEmpty(queue)) {
+        return -1;
+    }
+    int val = queue->front->val;
+    Node* temp = queue->front;
+    queue->front = queue->front->next;
+    if (queue->front == NULL) {
+        queue->rear = NULL;
+    }
+    free(temp);
+    return val;
+}
+
+// BFS function
+void bfs(int** graph, int numVertices, int source) {
+    // Initialize visited array
+    int visited[numVertices];
+    for (int i = 0; i < numVertices; i++) {
+        visited[i] = 0;
+    }
+    // Create Queue and enqueue source
+    Queue* queue = createQueue();
+    visited[source] = 1;
+    enqueue(queue, source);
+    // Loop until Queue is empty
+    while (!isQueueEmpty(queue)) {
+        // Dequeue a Node and print its value
+        int current = dequeue(queue);
+        printf("%d ", current);
+        // Enqueue all unvisited neighbors
+        for (int i = 0; i < numVertices; i++) {
+            if (graph[current][i] && !visited[i]) {
+                visited[i] = 1;
+                enqueue(queue, i);
+            }
+        }
+    }
+}
+
+// Main function
+int main() {
+    // Create graph
+    int numVertices = 6;
+    int** graph = (int**)malloc(numVertices * sizeof(int*));
+    for (int i = 0; i < numVertices; i++) {
+        graph[i] = (int*)malloc(numVertices * sizeof(int));
+        for (int j = 0; j < numVertices; j++) {
+            graph[i][j] = 0;
+        }
+    }
+    // Add edges
+    graph[0][1] = 1;
+    graph[0][2] = 1;
+    graph[1][3] = 1;
+    graph[1][4] = 1;
+    graph[2][4] = 1;
+    graph[3][4] = 1;
+    graph[3][5] = 1;
+    graph[4][5] = 1;
+    // Run BFS from source 0
+    bfs(graph, numVertices, 0);
+}
+

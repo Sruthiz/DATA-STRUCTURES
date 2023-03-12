@@ -1,0 +1,106 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+//impletation of stack also using isempty isfull
+#include <stdio.h>
+#include<stdlib.h>
+#define capacity 5
+int stack[capacity];
+int top = -1;
+void push(int);
+int pop();
+int peek();
+int isfull();
+int isempty();
+void traverse();
+void main(){
+    int ch,ele;
+    while(1){
+    printf("1.push\n,2.pop\n,3.peek\n,4.trasvers\n,5.quit\n");
+    printf("enter your choice:");
+    scanf("%d",&ch);
+    switch(ch){
+        case 1:push(ele);
+        break;
+        case 2:pop();
+        break;
+        case 3:peek();
+        break;
+        case 4:traverse();
+        break;
+        case 5:exit(0);
+        break;
+        default:printf("invalid input");
+    }
+    
+}
+}
+void push(int ele){
+    printf("enter elements:");
+    scanf("%d",&ele);
+    if(isfull() == 1){
+      printf("Stack is full");  
+    }
+    else{
+        top++;
+        stack[top] = ele;
+        printf("Element pushed");
+    }
+}
+
+int isfull(){
+    if(top == capacity-1){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int pop(){
+    int ele;
+    if(isempty()){
+     printf("no elements");
+    }
+    else{
+        ele = stack[top];
+        top--;
+    }
+    return ele;
+}
+
+int isempty(){
+if(top==-1){
+return 1;
+}
+else {
+return 0;
+}
+}
+
+int peek(){
+    int ele;
+    if(isempty()){
+    printf("empty stack");
+    }
+    else {
+    printf("%d",stack[top]);
+    }
+}
+
+void traverse(){
+    if(isempty()){
+        printf("No elements in stack");
+    }
+    else{
+        printf("Stack elements are\n:");
+        for(int i=top;i>=0;i--)
+        printf("%d\n",stack[i]);
+    }
+}
+
+

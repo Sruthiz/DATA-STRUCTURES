@@ -1,0 +1,36 @@
+//binary tree using recursion in c.
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+int tree[MAX_SIZE];
+
+void insert(int val, int pos) {
+    if (tree[pos] == 0) {
+        tree[pos] = val;
+    } else if (val < tree[pos]) {
+        insert(val, 2*pos);
+    } else {
+        insert(val, 2*pos+1);
+    }
+}
+
+void inorder_traversal(int pos) {
+    if (tree[pos] == 0) {
+        return;
+    }
+    inorder_traversal(2*pos);
+    printf("%d ", tree[pos]);
+    inorder_traversal(2*pos+1);
+}
+
+int main() {
+    insert(5, 1);
+    insert(3, 2);
+    insert(7, 3);
+    insert(1, 4);
+    insert(9, 5);
+    inorder_traversal(1); // Output: 1 3 5 7 9
+    return 0;
+}
+

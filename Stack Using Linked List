@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define size 5
+int queue[size];
+int front=0;
+int rare = 0;
+void insert();
+void traverse();
+void delete();
+int main(){
+    int ch;
+    while(1){
+        printf("Enter choice\n1.insert\n2.delete\n3.traverse\n4.quit\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1:insert();
+            traverse();
+                break;
+            case 2 : delete();
+                break;
+            case 3:exit(0);
+                break;
+        }
+        
+    }
+}
+void insert(){
+    int ele;
+    if(rare==size)
+    printf("overflow");
+    else
+    printf("enter data\n");
+    scanf("%d",&ele);
+    queue[rare] = ele;
+    rare++;
+}
+void traverse(){
+    if(front==rare)
+        printf("empty queue");
+    else
+        printf("queue elemets\n");
+    for(int i=front;i<rare;i++)
+     printf(" %d",queue[i]);
+}
+void delete(){
+    if(front==rare)
+        printf("queue is empty");
+    else
+        printf("Deleted element is %d",queue[front]);
+    for(int i=0;i<rare-1;i++)
+      queue[i] = queue[i+1];
+      rare--;
+}
+
+
